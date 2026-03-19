@@ -50,7 +50,7 @@ An internal design tool for generating stylized, illustrated, kid-friendly maps 
 
 ```bash
 # Clone the repo and enter the directory
-git clone <repo-url>
+git clone <https://github.com/Pmietka/Rug-App_proto>
 cd Rug-App_proto
 
 # Install all dependencies (root, client, server)
