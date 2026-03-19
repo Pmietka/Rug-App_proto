@@ -34,8 +34,6 @@ export async function fetchOSMData(
   way["natural"="coastline"](${expandedBbox});
 );
 out body geom;
->;
-out skel qt;
 `.trim();
 
   onProgress?.('Fetching OSM data from Overpass API...');
@@ -51,7 +49,16 @@ out skel qt;
   }
 
   onProgress?.('Parsing OSM data...');
-  const data = await response.json();
+  const text = await response.text();
+  let data: { elements?: unknown[] };
+  try {
+    data = JSON.parse(text);
+  } catch {
+    // Overpass returned XML (error or timeout page) — surface a clear message
+    const match = text.match(/<p[^>]*>(.*?)<\/p>/i);
+    const hint = match ? match[1].replace(/<[^>]+>/g, '') : text.slice(0, 120);
+    throw new Error(`Overpass returned non-JSON response: ${hint}`);
+  }
 
   return categorizeFeatures(data.elements || []);
 }
