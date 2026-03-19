@@ -159,6 +159,60 @@ NODE_ENV=production node server/dist/index.js
 
 ---
 
+## Deployment (Vercel + Railway)
+
+The recommended production setup is:
+- **Frontend** → [Vercel](https://vercel.com) (free tier)
+- **Backend** → [Railway](https://railway.app) (free trial, then ~$5/mo)
+
+### 1. Deploy the backend on Railway
+
+1. Create a new project on Railway and connect this repo.
+2. Set the **Root Directory** to `server`.
+3. Railway auto-detects Node.js and runs `npm install && npm run build && npm run start` (configured in `server/railway.json`).
+4. Add a **Volume** in Railway and mount it at `/data` — this is where the SQLite database lives.
+5. Set these environment variables in Railway:
+
+   | Variable | Value |
+   |---|---|
+   | `DATABASE_DIR` | `/data` |
+   | `CORS_ORIGIN` | your Vercel URL (add after step 2, e.g. `https://rugmap.vercel.app`) |
+
+6. Copy the Railway public URL (e.g. `https://rugmap-server.up.railway.app`).
+
+### 2. Deploy the frontend on Vercel
+
+1. Import this repo on Vercel.
+2. Set the **Root Directory** to `client`.
+3. Framework preset: **Vite** (auto-detected).
+4. Add this environment variable in Vercel:
+
+   | Variable | Value |
+   |---|---|
+   | `VITE_API_URL` | your Railway URL from step 1 (no trailing slash) |
+
+5. Deploy. Vercel builds with `npm run build` and serves `dist/`.
+
+### 3. Finish wiring CORS
+
+Go back to Railway and update `CORS_ORIGIN` to your Vercel deployment URL. Redeploy the server (Railway does this automatically on env var changes).
+
+### Environment variable reference
+
+**`client/.env.example`**
+```
+VITE_API_URL=https://your-server.up.railway.app
+```
+
+**`server/.env.example`**
+```
+PORT=3001
+CORS_ORIGIN=https://your-app.vercel.app
+DATABASE_DIR=/data
+```
+
+---
+
 ## Contributing
 
 This is an internal prototype. To add new SVG assets:
