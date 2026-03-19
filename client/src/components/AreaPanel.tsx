@@ -95,7 +95,8 @@ export const AreaPanel: React.FC = () => {
       useStore.getState().setLeftPanelTab('assets');
     } catch (err) {
       console.error(err);
-      toast.error('Failed to fetch OSM data. Try a smaller area.');
+      const msg = err instanceof Error ? err.message : String(err);
+      toast.error(`Failed to fetch OSM data: ${msg}`);
     } finally {
       setLoading(false);
     }
