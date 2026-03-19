@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!-- Green ground -->
+  <rect x="0" y="52" width="60" height="8" fill="#7ec850"/>
+  <!-- Main building (light teal) -->
+  <rect x="5" y="22" width="50" height="30" fill="#80c8c0" rx="2"/>
+  <!-- Flat roof with awning -->
+  <rect x="2" y="18" width="56" height="8" fill="#e05050" rx="2"/>
+  <!-- Awning stripes -->
+  <rect x="4" y="18" width="7" height="8" fill="#c03030"/>
+  <rect x="18" y="18" width="7" height="8" fill="#c03030"/>
+  <rect x="32" y="18" width="7" height="8" fill="#c03030"/>
+  <rect x="46" y="18" width="7" height="8" fill="#c03030"/>
+  <!-- Large shop window -->
+  <rect x="8" y="28" width="24" height="16" fill="#d8f0f8" rx="1"/>
+  <line x1="20" y1="28" x2="20" y2="44" stroke="#a0c0c8" stroke-width="1"/>
+  <line x1="8" y1="36" x2="32" y2="36" stroke="#a0c0c8" stroke-width="1"/>
+  <!-- Door -->
+  <rect x="38" y="34" width="12" height="18" fill="#7a3010" rx="1"/>
+  <circle cx="48" cy="43" r="1.2" fill="#f0c040"/>
+  <!-- Shop sign -->
+  <rect x="8" y="22" width="44" height="7" fill="#f5f0e0" rx="1"/>
+  <text x="30" y="27" font-size="4.5" font-family="sans-serif" font-weight="bold" fill="#e05050" text-anchor="middle">SHOP</text>
+  <!-- Chimney -->
+  <rect x="42" y="8" width="5" height="12" fill="#c86428"/>
+  <!-- Roof top section -->
+  <polygon points="2,20 30,5 58,20" fill="#d04040"/>
+</svg>

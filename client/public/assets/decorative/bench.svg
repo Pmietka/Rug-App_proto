@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 30" width="50" height="30">
+  <!-- Grass base -->
+  <rect x="0" y="22" width="50" height="8" fill="#7ec850"/>
+  <!-- Back slats (backrest) -->
+  <rect x="4" y="10" width="42" height="5" fill="#c8a060" rx="1.5"/>
+  <rect x="4" y="15" width="42" height="5" fill="#c8a060" rx="1.5"/>
+  <!-- Seat slats -->
+  <rect x="4" y="17" width="42" height="5" fill="#d8b070" rx="1.5"/>
+  <!-- Vertical supports (back) -->
+  <rect x="8" y="10" width="3" height="14" fill="#a08040" rx="1"/>
+  <rect x="39" y="10" width="3" height="14" fill="#a08040" rx="1"/>
+  <!-- Legs -->
+  <rect x="6" y="22" width="4" height="7" fill="#a08040" rx="1"/>
+  <rect x="18" y="22" width="4" height="7" fill="#a08040" rx="1"/>
+  <rect x="28" y="22" width="4" height="7" fill="#a08040" rx="1"/>
+  <rect x="40" y="22" width="4" height="7" fill="#a08040" rx="1"/>
+  <!-- Armrests -->
+  <rect x="4" y="15" width="5" height="3" fill="#b89050" rx="1"/>
+  <rect x="41" y="15" width="5" height="3" fill="#b89050" rx="1"/>
+</svg>

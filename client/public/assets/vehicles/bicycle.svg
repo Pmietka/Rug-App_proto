@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30" width="40" height="30">
+  <!-- Back wheel -->
+  <circle cx="8" cy="22" r="7" fill="none" stroke="#444" stroke-width="2.5"/>
+  <circle cx="8" cy="22" r="2.5" fill="#666"/>
+  <!-- Back wheel spokes -->
+  <line x1="8" y1="15" x2="8" y2="22" stroke="#888" stroke-width="1"/>
+  <line x1="8" y1="22" x2="8" y2="29" stroke="#888" stroke-width="1"/>
+  <line x1="1" y1="22" x2="8" y2="22" stroke="#888" stroke-width="1"/>
+  <line x1="8" y1="22" x2="15" y2="22" stroke="#888" stroke-width="1"/>
+  <!-- Front wheel -->
+  <circle cx="32" cy="22" r="7" fill="none" stroke="#444" stroke-width="2.5"/>
+  <circle cx="32" cy="22" r="2.5" fill="#666"/>
+  <!-- Front wheel spokes -->
+  <line x1="32" y1="15" x2="32" y2="22" stroke="#888" stroke-width="1"/>
+  <line x1="32" y1="22" x2="32" y2="29" stroke="#888" stroke-width="1"/>
+  <line x1="25" y1="22" x2="32" y2="22" stroke="#888" stroke-width="1"/>
+  <line x1="32" y1="22" x2="39" y2="22" stroke="#888" stroke-width="1"/>
+  <!-- Frame (red) -->
+  <!-- Chain stay (back wheel to bottom bracket) -->
+  <line x1="8" y1="22" x2="20" y2="22" stroke="#e03030" stroke-width="2.5"/>
+  <!-- Seat tube -->
+  <line x1="20" y1="22" x2="20" y2="12" stroke="#e03030" stroke-width="2.5"/>
+  <!-- Top tube -->
+  <line x1="20" y1="12" x2="30" y2="12" stroke="#e03030" stroke-width="2.5"/>
+  <!-- Down tube -->
+  <line x1="20" y1="12" x2="32" y2="22" stroke="#e03030" stroke-width="2.5"/>
+  <!-- Fork -->
+  <line x1="30" y1="12" x2="32" y2="22" stroke="#e03030" stroke-width="2"/>
+  <!-- Seat stay -->
+  <line x1="20" y1="14" x2="8" y2="22" stroke="#e03030" stroke-width="2"/>
+  <!-- Handlebar -->
+  <line x1="29" y1="10" x2="34" y2="10" stroke="#444" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="31" y1="10" x2="31" y2="13" stroke="#444" stroke-width="2"/>
+  <!-- Seat -->
+  <ellipse cx="20" cy="11" rx="5" ry="2" fill="#c84020"/>
+  <line x1="20" y1="12" x2="20" y2="14" stroke="#888" stroke-width="1.5"/>
+  <!-- Pedal indicator -->
+  <ellipse cx="20" cy="22" rx="3" ry="2" fill="#c84020"/>
+</svg>

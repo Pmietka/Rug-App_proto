@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 25" width="40" height="25">
+  <!-- Car body (top-down view) -->
+  <!-- Main body shape -->
+  <rect x="3" y="5" width="34" height="15" fill="#e03030" rx="4"/>
+  <!-- Car roof/cabin (lighter red, slightly narrower) -->
+  <rect x="8" y="7" width="22" height="11" fill="#f05050" rx="3"/>
+  <!-- Windshields -->
+  <rect x="9" y="8" width="9" height="9" fill="#a8d8f0" rx="2" opacity="0.9"/>
+  <rect x="22" y="8" width="9" height="9" fill="#a8d8f0" rx="2" opacity="0.9"/>
+  <!-- Center divider (between windows) -->
+  <rect x="19" y="7" width="2" height="11" fill="#c03030"/>
+  <!-- Front bumper -->
+  <rect x="1" y="8" width="4" height="9" fill="#c0c0c0" rx="2"/>
+  <!-- Rear bumper -->
+  <rect x="35" y="8" width="4" height="9" fill="#c0c0c0" rx="2"/>
+  <!-- Wheels (top-down: just 4 rounded rects) -->
+  <rect x="3" y="2" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="29" y="2" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="3" y="18" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="29" y="18" width="8" height="5" fill="#333" rx="2"/>
+  <!-- Headlights -->
+  <ellipse cx="4" cy="10" rx="2" ry="1.5" fill="#f8f040"/>
+  <ellipse cx="4" cy="15" rx="2" ry="1.5" fill="#f8f040"/>
+  <!-- Taillights -->
+  <ellipse cx="36" cy="10" rx="2" ry="1.5" fill="#f03030"/>
+  <ellipse cx="36" cy="15" rx="2" ry="1.5" fill="#f03030"/>
+</svg>

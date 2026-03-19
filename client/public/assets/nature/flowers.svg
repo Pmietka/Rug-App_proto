@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 40" width="50" height="40">
+  <!-- Grass base -->
+  <rect x="0" y="28" width="50" height="12" fill="#7ec850"/>
+  <!-- Stems -->
+  <line x1="10" y1="30" x2="10" y2="14" stroke="#60a030" stroke-width="2"/>
+  <line x1="25" y1="30" x2="25" y2="10" stroke="#60a030" stroke-width="2"/>
+  <line x1="40" y1="30" x2="40" y2="16" stroke="#60a030" stroke-width="2"/>
+  <!-- Leaves -->
+  <path d="M 10,24 Q 5,20 8,16" stroke="#60a030" stroke-width="1.5" fill="#80c040" opacity="0.8"/>
+  <path d="M 25,22 Q 30,18 27,14" stroke="#60a030" stroke-width="1.5" fill="#80c040" opacity="0.8"/>
+  <path d="M 40,22 Q 35,18 37,14" stroke="#60a030" stroke-width="1.5" fill="#80c040" opacity="0.8"/>
+  <!-- Red flower (left) -->
+  <circle cx="10" cy="11" r="3.5" fill="#e84040"/>
+  <circle cx="10" cy="6" r="2.5" fill="#f06060"/>
+  <circle cx="6" cy="9" r="2.5" fill="#e84040"/>
+  <circle cx="14" cy="9" r="2.5" fill="#e84040"/>
+  <circle cx="10" cy="9" r="2.5" fill="#f0c040"/>
+  <!-- Yellow flower (center) -->
+  <circle cx="25" cy="7" r="3.5" fill="#f0d020"/>
+  <circle cx="25" cy="2" r="2.5" fill="#f8e040"/>
+  <circle cx="21" cy="5" r="2.5" fill="#f0d020"/>
+  <circle cx="29" cy="5" r="2.5" fill="#f0d020"/>
+  <circle cx="25" cy="5" r="2.5" fill="#ff8020"/>
+  <!-- Pink flower (right) -->
+  <circle cx="40" cy="13" r="3.5" fill="#f070a0"/>
+  <circle cx="40" cy="8" r="2.5" fill="#f898b8"/>
+  <circle cx="36" cy="11" r="2.5" fill="#f070a0"/>
+  <circle cx="44" cy="11" r="2.5" fill="#f070a0"/>
+  <circle cx="40" cy="11" r="2.5" fill="#f0c040"/>
+</svg>

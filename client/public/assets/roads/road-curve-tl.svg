@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!-- Green grass background -->
+  <rect x="0" y="0" width="60" height="60" fill="#7ec850"/>
+  <!-- Curved road: connects left side (horizontal) to bottom (vertical), turning at top-left -->
+  <!-- Road band: outer arc radius 60, inner arc radius 40, centered at (0,0) -->
+  <path d="
+    M 60,20
+    A 60,60 0 0,0 20,60
+    L 20,60
+    A 40,40 0 0,1 0,20
+    L 60,20 Z
+  " fill="none"/>
+  <!-- Simpler approach: road from left to bottom, curve at top-left corner (0,0) -->
+  <!-- Outer edge: arc from (60,0) to (0,60) centered at (0,0) radius 60 -->
+  <!-- Inner edge: arc from (40,0) to (0,40) centered at (0,0) radius 40 -->
+  <path d="
+    M 0,60
+    L 20,60
+    A 20,20 0 0,0 60,20
+    L 60,0
+    L 0,0
+    Z
+  " fill="#c8c8b0"/>
+  <!-- Inner corner green cutout to round it -->
+  <!-- Center line arc -->
+  <path d="M 0,10 A 50,50 0 0,0 50,60" stroke="white" stroke-width="2.5" fill="none" stroke-dasharray="10,7"/>
+  <!-- Edge lines -->
+  <path d="M 0,3 A 57,57 0 0,0 57,60" stroke="#a0a088" stroke-width="1.5" fill="none"/>
+  <path d="M 0,17 A 43,43 0 0,0 43,60" stroke="#a0a088" stroke-width="1.5" fill="none"/>
+</svg>

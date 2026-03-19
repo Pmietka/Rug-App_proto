@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 30" width="50" height="30">
+  <!-- Sky background -->
+  <rect x="0" y="0" width="50" height="30" fill="#c8e8f8"/>
+  <!-- Bird 1 (large, center-left) -->
+  <path d="M 12,14 Q 16,10 20,14" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 20,14 Q 24,10 28,14" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Bird 2 (small, top right) -->
+  <path d="M 32,8 Q 35,5 38,8" stroke="#666" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 38,8 Q 41,5 44,8" stroke="#666" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Bird 3 (tiny, top center) -->
+  <path d="M 22,5 Q 24,3 26,5" stroke="#777" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 26,5 Q 28,3 30,5" stroke="#777" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Bird 4 (small, lower right) -->
+  <path d="M 36,20 Q 38,17 40,20" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 40,20 Q 42,17 44,20" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Bird 5 (tiny, left) -->
+  <path d="M 4,20 Q 6,18 8,20" stroke="#666" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M 8,20 Q 10,18 12,20" stroke="#666" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 60" width="80" height="60">
+  <!-- Left evergreen -->
+  <rect x="10" y="50" width="5" height="9" fill="#8b5e3c" rx="1"/>
+  <polygon points="2,52 12.5,35 23,52" fill="#3a8c28"/>
+  <polygon points="4,44 12.5,28 21,44" fill="#44a030"/>
+  <polygon points="7,35 12.5,20 18,35" fill="#52b838"/>
+  <!-- Center deciduous (bigger, back) -->
+  <rect x="37" y="46" width="6" height="13" fill="#8b5e3c" rx="1"/>
+  <circle cx="40" cy="30" r="16" fill="#4ab030"/>
+  <circle cx="30" cy="26" r="10" fill="#52c038"/>
+  <circle cx="50" cy="24" r="10" fill="#52c038"/>
+  <circle cx="40" cy="18" r="9" fill="#60d040"/>
+  <circle cx="29" cy="34" r="8" fill="#48a82c"/>
+  <circle cx="51" cy="34" r="8" fill="#48a82c"/>
+  <!-- Right evergreen -->
+  <rect x="65" y="50" width="5" height="9" fill="#8b5e3c" rx="1"/>
+  <polygon points="57,52 67.5,35 78,52" fill="#3a8c28"/>
+  <polygon points="59,44 67.5,28 76,44" fill="#44a030"/>
+  <polygon points="62,35 67.5,20 73,35" fill="#52b838"/>
+</svg>

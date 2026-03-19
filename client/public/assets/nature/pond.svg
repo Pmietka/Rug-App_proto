@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 60" width="80" height="60">
+  <!-- Grass background -->
+  <rect x="0" y="0" width="80" height="60" fill="#7ec850" rx="4"/>
+  <!-- Pond (blue oval) -->
+  <ellipse cx="40" cy="35" rx="32" ry="20" fill="#5090d0"/>
+  <!-- Water shimmer -->
+  <ellipse cx="40" cy="35" rx="32" ry="20" fill="none" stroke="#70b0f0" stroke-width="1.5"/>
+  <ellipse cx="38" cy="34" rx="24" ry="13" fill="#60a8e0" opacity="0.5"/>
+  <!-- Water ripple lines -->
+  <path d="M 22,38 Q 30,34 38,38 Q 46,42 54,38" stroke="#a8d0f0" stroke-width="1.5" fill="none"/>
+  <path d="M 28,44 Q 36,40 44,44 Q 50,48 56,44" stroke="#a8d0f0" stroke-width="1.2" fill="none"/>
+  <!-- Duck body -->
+  <ellipse cx="52" cy="32" rx="7" ry="5" fill="#f5f0e0"/>
+  <!-- Duck head -->
+  <circle cx="58" cy="29" r="4" fill="#f5f0e0"/>
+  <!-- Duck beak -->
+  <polygon points="62,29 66,27 62,31" fill="#f0a020"/>
+  <!-- Duck eye -->
+  <circle cx="60" cy="28" r="1" fill="#333"/>
+  <!-- Duck wing accent -->
+  <path d="M 46,31 Q 50,28 55,31" stroke="#d0c8a0" stroke-width="1.5" fill="none"/>
+  <!-- Reeds left -->
+  <line x1="12" y1="48" x2="14" y2="28" stroke="#6a8c40" stroke-width="2"/>
+  <ellipse cx="14" cy="28" rx="2" ry="4" fill="#8b6020"/>
+  <line x1="16" y1="50" x2="17" y2="32" stroke="#6a8c40" stroke-width="2"/>
+  <ellipse cx="17" cy="32" rx="2" ry="4" fill="#8b6020"/>
+  <!-- Lily pad -->
+  <ellipse cx="28" cy="45" rx="5" ry="3" fill="#60a830"/>
+  <line x1="28" y1="42" x2="28" y2="48" stroke="#408020" stroke-width="1"/>
+</svg>

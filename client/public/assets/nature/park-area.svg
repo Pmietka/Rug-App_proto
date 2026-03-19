@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 60" width="80" height="60">
+  <!-- Grass background -->
+  <rect x="0" y="0" width="80" height="60" fill="#7ec850" rx="4"/>
+  <!-- Lighter green path -->
+  <ellipse cx="40" cy="40" rx="30" ry="12" fill="#98d868" opacity="0.6"/>
+  <!-- Small tree left -->
+  <rect x="10" y="30" width="4" height="10" fill="#8b5e3c" rx="1"/>
+  <circle cx="12" cy="25" r="9" fill="#44a030"/>
+  <circle cx="8" cy="23" r="6" fill="#52c038"/>
+  <circle cx="16" cy="22" r="6" fill="#52c038"/>
+  <!-- Small tree right -->
+  <rect x="66" y="30" width="4" height="10" fill="#8b5e3c" rx="1"/>
+  <circle cx="68" cy="25" r="9" fill="#44a030"/>
+  <circle cx="64" cy="23" r="6" fill="#52c038"/>
+  <circle cx="72" cy="22" r="6" fill="#52c038"/>
+  <!-- Flowers scattered -->
+  <!-- Red flower -->
+  <circle cx="30" cy="50" r="3" fill="#e84040"/>
+  <circle cx="30" cy="44" r="2" fill="#f06060"/>
+  <circle cx="26" cy="47" r="2" fill="#e84040"/>
+  <circle cx="34" cy="47" r="2" fill="#e84040"/>
+  <circle cx="30" cy="47" r="2" fill="#f0c040"/>
+  <!-- Yellow flower -->
+  <circle cx="50" cy="52" r="3" fill="#f0d020"/>
+  <circle cx="50" cy="46" r="2" fill="#f8e040"/>
+  <circle cx="46" cy="49" r="2" fill="#f0d020"/>
+  <circle cx="54" cy="49" r="2" fill="#f0d020"/>
+  <circle cx="50" cy="49" r="2" fill="#ff9030"/>
+  <!-- Pink flower -->
+  <circle cx="40" cy="48" r="3" fill="#f070a0"/>
+  <circle cx="40" cy="42" r="2" fill="#f898b8"/>
+  <circle cx="36" cy="45" r="2" fill="#f070a0"/>
+  <circle cx="44" cy="45" r="2" fill="#f070a0"/>
+  <circle cx="40" cy="45" r="2" fill="#f0c040"/>
+  <!-- Stem lines -->
+  <line x1="30" y1="50" x2="30" y2="56" stroke="#60a030" stroke-width="1.5"/>
+  <line x1="50" y1="52" x2="50" y2="58" stroke="#60a030" stroke-width="1.5"/>
+  <line x1="40" y1="48" x2="40" y2="55" stroke="#60a030" stroke-width="1.5"/>
+  <!-- Bench in center -->
+  <rect x="33" y="38" width="14" height="5" fill="#c8a060" rx="1"/>
+  <rect x="33" y="43" width="3" height="6" fill="#a08040" rx="1"/>
+  <rect x="44" y="43" width="3" height="6" fill="#a08040" rx="1"/>
+</svg>

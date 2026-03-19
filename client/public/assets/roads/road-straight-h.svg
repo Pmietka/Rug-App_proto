@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="100" height="40">
+  <!-- Road surface -->
+  <rect x="0" y="0" width="100" height="40" fill="#c8c8b0" rx="0"/>
+  <!-- Road edge lines -->
+  <line x1="0" y1="3" x2="100" y2="3" stroke="#a0a088" stroke-width="1.5"/>
+  <line x1="0" y1="37" x2="100" y2="37" stroke="#a0a088" stroke-width="1.5"/>
+  <!-- White dashed center line -->
+  <line x1="0" y1="20" x2="100" y2="20" stroke="white" stroke-width="2.5" stroke-dasharray="12,8"/>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!-- Sun rays (behind the circle) -->
+  <!-- Cardinal rays -->
+  <line x1="30" y1="2" x2="30" y2="12" stroke="#f0c020" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="30" y1="48" x2="30" y2="58" stroke="#f0c020" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="2" y1="30" x2="12" y2="30" stroke="#f0c020" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="48" y1="30" x2="58" y2="30" stroke="#f0c020" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Diagonal rays -->
+  <line x1="9" y1="9" x2="17" y2="17" stroke="#f0c020" stroke-width="3" stroke-linecap="round"/>
+  <line x1="43" y1="43" x2="51" y2="51" stroke="#f0c020" stroke-width="3" stroke-linecap="round"/>
+  <line x1="51" y1="9" x2="43" y2="17" stroke="#f0c020" stroke-width="3" stroke-linecap="round"/>
+  <line x1="9" y1="51" x2="17" y2="43" stroke="#f0c020" stroke-width="3" stroke-linecap="round"/>
+  <!-- Sun body -->
+  <circle cx="30" cy="30" r="16" fill="#f8d020"/>
+  <!-- Sun face (happy) -->
+  <circle cx="30" cy="30" r="16" fill="#f0c020"/>
+  <!-- Glow rim -->
+  <circle cx="30" cy="30" r="16" fill="none" stroke="#f8e040" stroke-width="2"/>
+  <!-- Smile -->
+  <path d="M 24,34 Q 30,40 36,34" stroke="#e08010" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Eyes -->
+  <circle cx="25" cy="27" r="2.5" fill="#d07010"/>
+  <circle cx="35" cy="27" r="2.5" fill="#d07010"/>
+  <!-- Eye sparkles -->
+  <circle cx="26" cy="26" r="1" fill="#f8f0a0"/>
+  <circle cx="36" cy="26" r="1" fill="#f8f0a0"/>
+  <!-- Cheeks -->
+  <circle cx="22" cy="33" r="3" fill="#f0a040" opacity="0.5"/>
+  <circle cx="38" cy="33" r="3" fill="#f0a040" opacity="0.5"/>
+</svg>

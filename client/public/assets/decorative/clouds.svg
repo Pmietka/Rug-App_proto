@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 45" width="80" height="45">
+  <!-- Sky background -->
+  <rect x="0" y="0" width="80" height="45" fill="#c8e8f8"/>
+  <!-- Main cloud -->
+  <ellipse cx="40" cy="30" rx="32" ry="12" fill="white"/>
+  <ellipse cx="28" cy="25" rx="16" ry="12" fill="white"/>
+  <ellipse cx="46" cy="23" rx="18" ry="13" fill="white"/>
+  <ellipse cx="60" cy="27" rx="14" ry="10" fill="white"/>
+  <ellipse cx="18" cy="28" rx="12" ry="9" fill="white"/>
+  <!-- Cloud highlight (slightly lighter top) -->
+  <ellipse cx="40" cy="22" rx="16" ry="7" fill="white" opacity="0.7"/>
+  <ellipse cx="46" cy="18" rx="12" ry="6" fill="#f8f8ff" opacity="0.9"/>
+  <!-- Shadow underside -->
+  <ellipse cx="40" cy="36" rx="28" ry="6" fill="#e8e8f0" opacity="0.5"/>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55 25" width="55" height="25">
+  <!-- Truck bed/cargo body -->
+  <rect x="14" y="5" width="38" height="15" fill="#808080" rx="2"/>
+  <!-- Cargo cover detail -->
+  <rect x="15" y="6" width="36" height="13" fill="#909090" rx="1"/>
+  <!-- Cargo lines -->
+  <line x1="22" y1="6" x2="22" y2="19" stroke="#787878" stroke-width="1"/>
+  <line x1="30" y1="6" x2="30" y2="19" stroke="#787878" stroke-width="1"/>
+  <line x1="38" y1="6" x2="38" y2="19" stroke="#787878" stroke-width="1"/>
+  <line x1="46" y1="6" x2="46" y2="19" stroke="#787878" stroke-width="1"/>
+  <!-- Cab -->
+  <rect x="2" y="5" width="16" height="15" fill="#5090d0" rx="3"/>
+  <!-- Cab roof (slightly lighter) -->
+  <rect x="3" y="6" width="14" height="13" fill="#60a0e0" rx="2"/>
+  <!-- Windshield -->
+  <rect x="4" y="8" width="10" height="9" fill="#a8d8f0" rx="2" opacity="0.9"/>
+  <!-- Front bumper -->
+  <rect x="0" y="8" width="4" height="9" fill="#c0c0c0" rx="1"/>
+  <!-- Wheels -->
+  <rect x="2" y="2" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="17" y="2" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="36" y="2" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="2" y="18" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="17" y="18" width="8" height="5" fill="#333" rx="2"/>
+  <rect x="36" y="18" width="8" height="5" fill="#333" rx="2"/>
+  <!-- Headlights -->
+  <ellipse cx="2" cy="10" rx="1.5" ry="1.5" fill="#f8f040"/>
+  <ellipse cx="2" cy="15" rx="1.5" ry="1.5" fill="#f8f040"/>
+  <!-- Taillights -->
+  <ellipse cx="52" cy="10" rx="1.5" ry="1.5" fill="#f03030"/>
+  <ellipse cx="52" cy="15" rx="1.5" ry="1.5" fill="#f03030"/>
+</svg>

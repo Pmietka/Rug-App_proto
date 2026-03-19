@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 50" width="80" height="50">
+  <!-- Main rotor (top) -->
+  <line x1="8" y1="12" x2="72" y2="12" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="12" r="3" fill="#666"/>
+  <!-- Rotor hub detail -->
+  <ellipse cx="40" cy="12" rx="4" ry="3" fill="#777"/>
+  <!-- Main body (teardrop shape) -->
+  <ellipse cx="35" cy="28" rx="22" ry="12" fill="#e84040"/>
+  <!-- Cockpit window (rounded front) -->
+  <ellipse cx="20" cy="26" rx="10" ry="9" fill="#60b0e0"/>
+  <!-- Body highlight -->
+  <ellipse cx="38" cy="23" rx="14" ry="6" fill="#f05050" opacity="0.6"/>
+  <!-- Tail boom -->
+  <path d="M 55,28 L 75,28 L 75,32 L 55,32 Z" fill="#c83030"/>
+  <!-- Tail rotor -->
+  <line x1="75" y1="18" x2="75" y2="42" stroke="#888" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="75" cy="30" r="2" fill="#666"/>
+  <!-- Skids (landing gear) -->
+  <line x1="22" y1="38" x2="50" y2="38" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+  <line x1="26" y1="36" x2="26" y2="38" stroke="#888" stroke-width="2"/>
+  <line x1="44" y1="36" x2="44" y2="38" stroke="#888" stroke-width="2"/>
+  <!-- Window details (cockpit frame) -->
+  <ellipse cx="20" cy="26" rx="10" ry="9" fill="none" stroke="#4090c0" stroke-width="1.5"/>
+  <!-- Cockpit window highlight -->
+  <ellipse cx="17" cy="23" rx="4" ry="3" fill="#90d0f0" opacity="0.6"/>
+  <!-- Star/stripe decoration -->
+  <circle cx="42" cy="28" r="4" fill="#f0c040"/>
+  <text x="42" y="30" font-size="5" font-family="sans-serif" font-weight="bold" fill="#c83030" text-anchor="middle">★</text>
+</svg>

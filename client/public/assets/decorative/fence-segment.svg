@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30" width="100" height="30">
+  <!-- Grass base -->
+  <rect x="0" y="22" width="100" height="8" fill="#7ec850"/>
+  <!-- Horizontal rails -->
+  <rect x="0" y="10" width="100" height="4" fill="#f0ede0" rx="1"/>
+  <rect x="0" y="18" width="100" height="4" fill="#f0ede0" rx="1"/>
+  <!-- Picket posts (pointed tops) -->
+  <!-- Post 1 -->
+  <polygon points="4,0 8,0 9,8 3,8" fill="#f5f2e5"/>
+  <rect x="3" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 2 -->
+  <polygon points="16,0 20,0 21,8 15,8" fill="#f5f2e5"/>
+  <rect x="15" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 3 -->
+  <polygon points="28,0 32,0 33,8 27,8" fill="#f5f2e5"/>
+  <rect x="27" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 4 -->
+  <polygon points="40,0 44,0 45,8 39,8" fill="#f5f2e5"/>
+  <rect x="39" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 5 -->
+  <polygon points="52,0 56,0 57,8 51,8" fill="#f5f2e5"/>
+  <rect x="51" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 6 -->
+  <polygon points="64,0 68,0 69,8 63,8" fill="#f5f2e5"/>
+  <rect x="63" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 7 -->
+  <polygon points="76,0 80,0 81,8 75,8" fill="#f5f2e5"/>
+  <rect x="75" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+  <!-- Post 8 -->
+  <polygon points="88,0 92,0 93,8 87,8" fill="#f5f2e5"/>
+  <rect x="87" y="8" width="6" height="20" fill="#f5f2e5" rx="0.5"/>
+</svg>

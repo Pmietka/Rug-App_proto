@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" width="70" height="70">
+  <!-- Green ground -->
+  <rect x="0" y="60" width="70" height="10" fill="#7ec850"/>
+  <!-- Main building (sandy brown) -->
+  <rect x="5" y="26" width="60" height="34" fill="#c8a878" rx="2"/>
+  <!-- Roof pediment (triangle gable) -->
+  <polygon points="3,28 35,10 67,28" fill="#a08060"/>
+  <!-- Cornice/entablature -->
+  <rect x="3" y="25" width="64" height="6" fill="#b09070" rx="1"/>
+  <!-- Columns (4 white columns) -->
+  <rect x="10" y="26" width="5" height="30" fill="#f5f0e0" rx="2"/>
+  <rect x="22" y="26" width="5" height="30" fill="#f5f0e0" rx="2"/>
+  <rect x="43" y="26" width="5" height="30" fill="#f5f0e0" rx="2"/>
+  <rect x="55" y="26" width="5" height="30" fill="#f5f0e0" rx="2"/>
+  <!-- Column bases -->
+  <rect x="9" y="53" width="7" height="3" fill="#e0dcc8" rx="1"/>
+  <rect x="21" y="53" width="7" height="3" fill="#e0dcc8" rx="1"/>
+  <rect x="42" y="53" width="7" height="3" fill="#e0dcc8" rx="1"/>
+  <rect x="54" y="53" width="7" height="3" fill="#e0dcc8" rx="1"/>
+  <!-- Door (dark wood) -->
+  <rect x="29" y="44" width="12" height="16" fill="#7a5030" rx="1"/>
+  <circle cx="39" cy="52" r="1.2" fill="#f0c040"/>
+  <!-- Windows -->
+  <rect x="13" y="32" width="10" height="10" fill="#a8d8f0" rx="1"/>
+  <line x1="18" y1="32" x2="18" y2="42" stroke="white" stroke-width="1"/>
+  <line x1="13" y1="37" x2="23" y2="37" stroke="white" stroke-width="1"/>
+  <rect x="47" y="32" width="10" height="10" fill="#a8d8f0" rx="1"/>
+  <line x1="52" y1="32" x2="52" y2="42" stroke="white" stroke-width="1"/>
+  <line x1="47" y1="37" x2="57" y2="37" stroke="white" stroke-width="1"/>
+  <!-- Library text on pediment -->
+  <text x="35" y="21" font-size="4" font-family="sans-serif" font-weight="bold" fill="#f5f0e0" text-anchor="middle">LIBRARY</text>
+</svg>
