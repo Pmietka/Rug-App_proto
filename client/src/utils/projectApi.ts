@@ -1,6 +1,6 @@
 import type { Project } from '../types';
 
-const BASE = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '') + '/api';
+const BASE = '/api';
 
 export async function fetchProjects(): Promise<Project[]> {
   const res = await fetch(`${BASE}/projects`);
