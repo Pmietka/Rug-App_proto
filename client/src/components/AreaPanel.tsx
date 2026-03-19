@@ -1,12 +1,18 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { Search, MapPin, RotateCcw, Play, ChevronDown } from 'lucide-react';
+import React, { useState, useCallback, useRef } from 'react';
+import { Search, MapPin, Play, Crop } from 'lucide-react';
 import { useStore, getCanvasDimensions } from '../store/useStore';
 import { geocodeLocation, fetchOSMData } from '../utils/osmFetcher';
-import { osmToCanvasElements } from '../utils/renderEngine';
-import type { BoundingBox, RugDimension } from '../types';
+import { osmToCanvasElements, computeSmartCropBbox } from '../utils/renderEngine';
+import type { BoundingBox, RugDimension, RoadDetailLevel } from '../types';
 import toast from 'react-hot-toast';
 
 const RUG_DIMENSIONS: RugDimension[] = ['4x6', '5x7', '6x9', '8x10'];
+
+const ROAD_DETAIL_OPTIONS: { level: RoadDetailLevel; label: string; desc: string }[] = [
+  { level: 'major',    label: 'Major Only',  desc: 'Primary + secondary roads' },
+  { level: 'balanced', label: 'Balanced',    desc: 'Adds tertiary + named collectors' },
+  { level: 'detailed', label: 'Detailed',    desc: 'All except footways/service' },
+];
 
 interface SearchResult {
   lat: string | number;
@@ -18,14 +24,14 @@ interface SearchResult {
 export const AreaPanel: React.FC = () => {
   const {
     project, setLoading, setOSMData, setRoads, setWaterFeatures,
-    setGreenAreas, addAsset, setRugDimension, setBoundingBox, setProject
+    setGreenAreas, addAsset, setRugDimension, setBoundingBox, setProject,
+    roadDetailLevel, setRoadDetailLevel,
   } = useStore();
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [searching, setSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<SearchResult | null>(null);
 
   const searchTimeout = useRef<ReturnType<typeof setTimeout>>(null);
 
@@ -49,15 +55,11 @@ export const AreaPanel: React.FC = () => {
   }, []);
 
   const handleSelectLocation = (result: SearchResult) => {
-    setSelectedLocation(result);
     setQuery(result.display_name.split(',').slice(0, 2).join(','));
     setShowResults(false);
     setResults([]);
-
-    // Set bounding box from nominatim result
     const [south, north, west, east] = result.boundingbox.map(Number);
-    const bbox: BoundingBox = { north, south, east, west };
-    setBoundingBox(bbox);
+    setBoundingBox({ north, south, east, west });
   };
 
   const handleGenerate = async () => {
@@ -78,14 +80,13 @@ export const AreaPanel: React.FC = () => {
 
       const { width, height } = getCanvasDimensions(project.rugDimension);
       const { roads, waterFeatures, greenAreas, assets } = osmToCanvasElements(
-        osmData, bbox, width, height
+        osmData, bbox, width, height, roadDetailLevel
       );
 
       setRoads(roads);
       setWaterFeatures(waterFeatures);
       setGreenAreas(greenAreas);
 
-      // Clear existing assets and add new ones
       useStore.getState().setProject({ assets: [] });
       for (const asset of assets) {
         addAsset(asset);
@@ -102,7 +103,19 @@ export const AreaPanel: React.FC = () => {
     }
   };
 
+  const handleSmartCrop = () => {
+    const osmData = project.osmData;
+    if (!osmData) {
+      toast.error('Generate a map first, then apply Smart Crop');
+      return;
+    }
+    const adjusted = computeSmartCropBbox(osmData, project.boundingBox);
+    setBoundingBox(adjusted);
+    toast.success('Smart Crop applied — click Generate Map to re-render');
+  };
+
   const hasBbox = project.boundingBox.north !== 0 || project.boundingBox.south !== 0;
+  const hasOsmData = !!project.osmData;
 
   return (
     <div className="flex flex-col gap-3 p-3 text-sm">
@@ -195,6 +208,32 @@ export const AreaPanel: React.FC = () => {
         </div>
       </div>
 
+      {/* Road Detail Level */}
+      <div>
+        <label className="text-[#7a7a8a] text-xs block mb-1.5">Road Detail Level</label>
+        <div className="flex flex-col gap-1">
+          {ROAD_DETAIL_OPTIONS.map(({ level, label, desc }) => (
+            <button
+              key={level}
+              onClick={() => setRoadDetailLevel(level)}
+              className={`flex items-start gap-2 px-2.5 py-2 rounded text-xs text-left transition-colors border ${
+                roadDetailLevel === level
+                  ? 'bg-blue-600/30 border-blue-500 text-white'
+                  : 'bg-[#2a2a3a] border-[#3a3a4a] text-[#a0a0b0] hover:bg-[#3a3a4a] hover:text-white'
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full mt-0.5 flex-shrink-0 ${
+                roadDetailLevel === level ? 'bg-blue-400' : 'bg-[#4a4a5a]'
+              }`} />
+              <span>
+                <span className="font-medium">{label}</span>
+                <span className="text-[#7a7a8a] block">{desc}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Generate button */}
       <button
         onClick={handleGenerate}
@@ -205,11 +244,22 @@ export const AreaPanel: React.FC = () => {
         Generate Map
       </button>
 
+      {/* Smart Crop button — only visible after data is loaded */}
+      {hasOsmData && (
+        <button
+          onClick={handleSmartCrop}
+          className="flex items-center justify-center gap-2 bg-[#2a3a2a] hover:bg-[#3a4a3a] border border-green-700/50 text-green-400 font-medium py-2 rounded-md transition-all text-xs"
+        >
+          <Crop size={13} />
+          Smart Crop (minimize dead space)
+        </button>
+      )}
+
       {/* Tips */}
       <div className="text-[#5a5a6a] text-xs leading-relaxed">
-        <strong className="text-[#7a7a8a]">Tip:</strong> Search for a neighborhood or small town.
-        Larger areas may take longer to generate.
-        The Overpass API may be slow — please be patient.
+        <strong className="text-[#7a7a8a]">Tip:</strong> Use <strong className="text-[#8a8a9a]">Balanced</strong> for
+        clean illustrated look. After generating, try <strong className="text-green-600/80">Smart Crop</strong> for
+        coastal towns to remove lake dead space.
       </div>
     </div>
   );

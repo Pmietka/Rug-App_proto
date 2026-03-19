@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import {
-  Stage, Layer, Line, Rect, Image as KonvaImage, Text, Group, Circle, Shape
+  Stage, Layer, Line, Rect, Image as KonvaImage, Text, Group, Shape
 } from 'react-konva';
 import type Konva from 'konva';
 import { useStore } from '../store/useStore';
@@ -29,7 +29,6 @@ function useImage(src: string): HTMLImageElement | null {
       setImg(image);
     };
     image.onerror = () => {
-      // Create a fallback colored rectangle
       const canvas = document.createElement('canvas');
       canvas.width = 60;
       canvas.height = 60;
@@ -50,62 +49,155 @@ function useImage(src: string): HTMLImageElement | null {
   return img;
 }
 
-// Green area polygon component
-const GreenAreaShape: React.FC<{ area: GreenArea }> = ({ area }) => {
-  const color = area.type === 'forest' ? '#5a8f3c' :
-                area.type === 'garden' ? '#7ab648' : '#8fc45a';
-  const stroke = area.type === 'forest' ? '#4a7f2c' : '#6a9e3a';
+// ─── Green area shape ─────────────────────────────────────────────────────────
 
+const GREEN_COLORS: Record<string, { fill: string; stroke: string }> = {
+  forest:  { fill: '#7a9e5c', stroke: '#5a7e3c' },
+  garden:  { fill: '#8aba62', stroke: '#6a9a42' },
+  park:    { fill: '#9ac870', stroke: '#7aaa50' },
+  grass:   { fill: '#a8cc7c', stroke: '#88ac5c' },
+};
+
+const GreenAreaShape: React.FC<{ area: GreenArea }> = ({ area }) => {
+  const { fill, stroke } = GREEN_COLORS[area.type] ?? GREEN_COLORS.park;
   return (
     <Line
       points={area.points}
       closed
-      fill={color}
+      fill={fill}
       stroke={stroke}
-      strokeWidth={2}
-      opacity={0.7}
+      strokeWidth={1.5}
+      opacity={0.75}
       listening={false}
     />
   );
 };
 
-// Water feature component
-const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
-  const fillColor = feature.type === 'river' ? '#5b9bd5' : '#4a90d9';
-  const strokeColor = '#3a7ac0';
+// ─── Water shape ──────────────────────────────────────────────────────────────
 
-  if (feature.isClosed) {
+const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
+  if (feature.type === 'coastline') {
+    return (
+      <Group listening={false}>
+        {/* Water fill */}
+        <Line
+          points={feature.points}
+          closed
+          fill="#6aaede"
+          stroke="#4a8ec0"
+          strokeWidth={1}
+          opacity={0.88}
+          listening={false}
+        />
+        {/* Beach strip along the coastline edge */}
+        {feature.beachPoints && feature.beachPoints.length >= 4 && (
+          <Line
+            points={feature.beachPoints}
+            stroke="#e8d8a8"
+            strokeWidth={10}
+            lineCap="round"
+            lineJoin="round"
+            opacity={0.9}
+            listening={false}
+          />
+        )}
+        {/* Subtle wave lines inside water */}
+        {feature.beachPoints && <WaveLines coastPoints={feature.beachPoints} />}
+      </Group>
+    );
+  }
+
+  if (feature.type === 'river') {
     return (
       <Line
         points={feature.points}
-        closed
-        fill={fillColor}
-        stroke={strokeColor}
-        strokeWidth={2}
+        stroke="#6aaede"
+        strokeWidth={12}
+        lineCap="round"
+        lineJoin="round"
         opacity={0.85}
         listening={false}
       />
     );
   }
+
+  // Lake / pond
   return (
-    <Line
-      points={feature.points}
-      stroke={fillColor}
-      strokeWidth={10}
-      lineCap="round"
-      lineJoin="round"
-      opacity={0.85}
-      listening={false}
-    />
+    <Group listening={false}>
+      <Line
+        points={feature.points}
+        closed
+        fill="#6aaede"
+        stroke="#4a8ec0"
+        strokeWidth={1.5}
+        opacity={0.85}
+        listening={false}
+      />
+      {/* Small wave hint for lakes */}
+      <Line
+        points={feature.points}
+        closed
+        fill="transparent"
+        stroke="#8cc8f0"
+        strokeWidth={1}
+        dash={[6, 10]}
+        opacity={0.25}
+        listening={false}
+      />
+    </Group>
   );
 };
 
-// Road segment component
+// Subtle wave decoration inside coastline water
+const WaveLines: React.FC<{ coastPoints: number[] }> = ({ coastPoints }) => {
+  if (coastPoints.length < 4) return null;
+
+  // Find bounding box of coastline points
+  const xs = coastPoints.filter((_, i) => i % 2 === 0);
+  const ys = coastPoints.filter((_, i) => i % 2 !== 0);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs) + 200; // extend into water
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const height = maxY - minY;
+
+  // Draw 4 horizontal wavy lines inside the water body
+  return (
+    <Group listening={false} opacity={0.18}>
+      {[0.2, 0.38, 0.58, 0.76].map((t, i) => {
+        const y = minY + height * t;
+        // Small wave pattern using dash
+        return (
+          <Line
+            key={i}
+            points={[minX + 20, y, maxX, y]}
+            stroke="#ffffff"
+            strokeWidth={2}
+            dash={[14, 8]}
+            lineCap="round"
+          />
+        );
+      })}
+    </Group>
+  );
+};
+
+// ─── Road segment ─────────────────────────────────────────────────────────────
+
 const RoadSegment: React.FC<{ road: RoadPath }> = ({ road }) => {
   const hasCenterLine = road.centerLineColor !== 'transparent' && road.width >= 10;
 
   return (
     <Group listening={false}>
+      {/* Road casing (subtle outline) */}
+      <Line
+        points={road.points}
+        stroke="#9a9278"
+        strokeWidth={road.width + 2}
+        lineCap="round"
+        lineJoin="round"
+        opacity={0.35}
+      />
       {/* Road base */}
       <Line
         points={road.points}
@@ -123,14 +215,15 @@ const RoadSegment: React.FC<{ road: RoadPath }> = ({ road }) => {
           lineCap="round"
           lineJoin="round"
           dash={[8, 8]}
-          opacity={0.6}
+          opacity={0.5}
         />
       )}
     </Group>
   );
 };
 
-// Asset component with drag support
+// ─── Asset item ───────────────────────────────────────────────────────────────
+
 const AssetItem: React.FC<{
   asset: CanvasAsset;
   isSelected: boolean;
@@ -145,6 +238,7 @@ const AssetItem: React.FC<{
 
   const offsetX = asset.width / 2;
   const offsetY = asset.height / 2;
+  const isLandmark = ['school', 'hospital', 'library', 'fire-station', 'church'].includes(asset.type);
 
   return (
     <Group
@@ -159,14 +253,18 @@ const AssetItem: React.FC<{
       }}
       listening={!asset.locked}
     >
+      {/* Drop shadow for depth */}
       <KonvaImage
         image={img}
         width={asset.width * asset.scaleX}
         height={asset.height * asset.scaleY}
         offsetX={offsetX * asset.scaleX}
         offsetY={offsetY * asset.scaleY}
-        shadowBlur={isSelected ? 8 : 0}
-        shadowColor="#bd93f9"
+        shadowBlur={isLandmark ? 8 : 4}
+        shadowColor={isSelected ? '#bd93f9' : 'rgba(0,0,0,0.35)'}
+        shadowOffsetX={2}
+        shadowOffsetY={3}
+        shadowOpacity={isSelected ? 0.8 : 0.5}
       />
       {/* Selection indicator */}
       {isSelected && (
@@ -182,27 +280,63 @@ const AssetItem: React.FC<{
           listening={false}
         />
       )}
-      {/* Label */}
+      {/* Label with white halo for readability */}
       {showLabels && asset.labelVisible && asset.label && (
-        <Text
-          text={asset.label}
-          fontSize={10}
-          fill="#1a1a2e"
-          fontFamily="'Segoe UI', sans-serif"
-          fontStyle="bold"
-          align="center"
-          width={Math.max(asset.width * asset.scaleX + 20, 80)}
-          x={-Math.max(asset.width * asset.scaleX + 20, 80) / 2 + offsetX * asset.scaleX - offsetX * asset.scaleX}
-          y={asset.height * asset.scaleY / 2 + 2}
-          listening={false}
-          shadowBlur={3}
-          shadowColor="#ffffff"
-          shadowOpacity={0.8}
-        />
+        <>
+          <Text
+            text={asset.label}
+            fontSize={isLandmark ? 11 : 9}
+            fill="#ffffff"
+            fontFamily="'Segoe UI', Arial, sans-serif"
+            fontStyle="bold"
+            align="center"
+            width={Math.max(asset.width * asset.scaleX + 20, 90)}
+            x={-Math.max(asset.width * asset.scaleX + 20, 90) / 2 + offsetX * asset.scaleX - offsetX * asset.scaleX}
+            y={asset.height * asset.scaleY / 2 + 2}
+            listening={false}
+            strokeWidth={3}
+            stroke="#ffffff"
+          />
+          <Text
+            text={asset.label}
+            fontSize={isLandmark ? 11 : 9}
+            fill="#2a2a3a"
+            fontFamily="'Segoe UI', Arial, sans-serif"
+            fontStyle="bold"
+            align="center"
+            width={Math.max(asset.width * asset.scaleX + 20, 90)}
+            x={-Math.max(asset.width * asset.scaleX + 20, 90) / 2 + offsetX * asset.scaleX - offsetX * asset.scaleX}
+            y={asset.height * asset.scaleY / 2 + 2}
+            listening={false}
+          />
+        </>
       )}
     </Group>
   );
 };
+
+// ─── Ground texture (noise pattern via canvas) ────────────────────────────────
+
+function createGroundTexture(w: number, h: number): HTMLCanvasElement {
+  const canvas = document.createElement('canvas');
+  // Use a small tile that repeats
+  canvas.width = 200;
+  canvas.height = 200;
+  const ctx = canvas.getContext('2d')!;
+  ctx.fillStyle = 'transparent';
+  ctx.fillRect(0, 0, 200, 200);
+  // Subtle stipple
+  for (let i = 0; i < 600; i++) {
+    const x = Math.random() * 200;
+    const y = Math.random() * 200;
+    const alpha = Math.random() * 0.06 + 0.01;
+    ctx.fillStyle = `rgba(80, 70, 40, ${alpha})`;
+    ctx.fillRect(x, y, 1.5, 1.5);
+  }
+  return canvas;
+}
+
+// ─── Main canvas component ────────────────────────────────────────────────────
 
 export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) => {
   const {
@@ -211,10 +345,10 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
   } = useStore();
 
   const [stageSize, setStageSize] = useState({ width: 800, height: 600 });
+  const [groundTexture, setGroundTexture] = useState<HTMLCanvasElement | null>(null);
   const isPanning = useRef(false);
   const lastPos = useRef({ x: 0, y: 0 });
 
-  // Observe container resize
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -228,11 +362,16 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
     return () => obs.disconnect();
   }, [containerRef]);
 
+  // Generate ground texture once
+  useEffect(() => {
+    const tex = createGroundTexture(canvasState.canvasWidth, canvasState.canvasHeight);
+    setGroundTexture(tex);
+  }, [canvasState.canvasWidth, canvasState.canvasHeight]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-
       if (e.key === 'Delete' || e.key === 'Backspace') {
         if (selectedAssetId) useStore.getState().deleteAsset(selectedAssetId);
       }
@@ -252,21 +391,17 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
     e.evt.preventDefault();
     const stage = stageRef.current;
     if (!stage) return;
-
     const scaleBy = 1.08;
     const oldScale = canvasState.scale;
     const pointer = stage.getPointerPosition();
     if (!pointer) return;
-
     const mousePointTo = {
       x: (pointer.x - canvasState.offsetX) / oldScale,
       y: (pointer.y - canvasState.offsetY) / oldScale,
     };
-
     const newScale = e.evt.deltaY < 0
       ? Math.min(oldScale * scaleBy, 6)
       : Math.max(oldScale / scaleBy, 0.15);
-
     setCanvasState({
       scale: newScale,
       offsetX: pointer.x - mousePointTo.x * newScale,
@@ -295,19 +430,20 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
     });
   }, [canvasState, setCanvasState]);
 
-  const handleMouseUp = useCallback(() => {
-    isPanning.current = false;
-  }, []);
+  const handleMouseUp = useCallback(() => { isPanning.current = false; }, []);
 
   const handleDragEnd = useCallback((id: string, x: number, y: number) => {
     updateAsset(id, { x, y });
   }, [updateAsset]);
 
-  // Sort assets by zIndex
   const sortedAssets = [...project.assets].sort((a, b) => a.zIndex - b.zIndex);
-
   const canvasW = canvasState.canvasWidth;
   const canvasH = canvasState.canvasHeight;
+
+  // Border dimensions
+  const BORDER_OUTER = 14;
+  const BORDER_MID = 20;
+  const BORDER_INNER = 26;
 
   return (
     <div
@@ -329,39 +465,33 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
         onMouseUp={handleMouseUp}
         draggable={false}
       >
-        {/* Base layer - canvas background */}
+        {/* ── Layer 1: Background, map content ── */}
         <Layer listening={false}>
-          {/* Canvas background (rug surface) */}
+          {/* Rug background — sage green */}
           <Rect
             x={0}
             y={0}
             width={canvasW}
             height={canvasH}
-            fill="#e8f0d8"
-            cornerRadius={8}
+            fill="#c8d4a8"
+            cornerRadius={6}
           />
-          {/* Rug border */}
-          <Rect
-            x={0}
-            y={0}
-            width={canvasW}
-            height={canvasH}
-            stroke="#c8a870"
-            strokeWidth={12}
-            fill="transparent"
-            cornerRadius={8}
-          />
-          {/* Inner border */}
-          <Rect
-            x={8}
-            y={8}
-            width={canvasW - 16}
-            height={canvasH - 16}
-            stroke="#d4b880"
-            strokeWidth={4}
-            fill="transparent"
-            cornerRadius={4}
-          />
+
+          {/* Ground texture overlay */}
+          {groundTexture && (
+            <Shape
+              sceneFunc={(ctx, shape) => {
+                const pattern = ctx._context.createPattern(groundTexture, 'repeat');
+                if (pattern) {
+                  ctx._context.fillStyle = pattern;
+                  ctx._context.fillRect(0, 0, canvasW, canvasH);
+                }
+                shape.getLayer()?.batchDraw();
+              }}
+              opacity={0.45}
+              listening={false}
+            />
+          )}
 
           {/* Green areas */}
           {project.greenAreas.map((area) => (
@@ -373,7 +503,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
             <WaterShape key={water.id} feature={water} />
           ))}
 
-          {/* Roads - sorted by zIndex */}
+          {/* Roads — sorted by zIndex */}
           {[...project.roads]
             .sort((a, b) => a.zIndex - b.zIndex)
             .map((road) => (
@@ -382,7 +512,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
           }
         </Layer>
 
-        {/* Interactive asset layer */}
+        {/* ── Layer 2: Interactive assets ── */}
         <Layer>
           {sortedAssets.map((asset) => (
             <AssetItem
@@ -394,6 +524,45 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
               showLabels={showLabels}
             />
           ))}
+        </Layer>
+
+        {/* ── Layer 3: Decorative border (always on top) ── */}
+        <Layer listening={false}>
+          {/* Outer border */}
+          <Rect
+            x={0}
+            y={0}
+            width={canvasW}
+            height={canvasH}
+            stroke="#8a7848"
+            strokeWidth={BORDER_OUTER}
+            fill="transparent"
+            cornerRadius={6}
+          />
+          {/* Mid border */}
+          <Rect
+            x={BORDER_MID / 2}
+            y={BORDER_MID / 2}
+            width={canvasW - BORDER_MID}
+            height={canvasH - BORDER_MID}
+            stroke="#c8a870"
+            strokeWidth={3}
+            fill="transparent"
+            cornerRadius={4}
+          />
+          {/* Inner decorative line */}
+          <Rect
+            x={BORDER_INNER / 2}
+            y={BORDER_INNER / 2}
+            width={canvasW - BORDER_INNER}
+            height={canvasH - BORDER_INNER}
+            stroke="#d4bc88"
+            strokeWidth={1.5}
+            fill="transparent"
+            cornerRadius={3}
+            dash={[6, 4]}
+            opacity={0.7}
+          />
         </Layer>
       </Stage>
 

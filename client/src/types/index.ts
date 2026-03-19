@@ -1,5 +1,7 @@
 export type RugDimension = '4x6' | '5x7' | '6x9' | '8x10';
 
+export type RoadDetailLevel = 'major' | 'balanced' | 'detailed';
+
 export interface BoundingBox {
   north: number;
   south: number;
@@ -59,10 +61,11 @@ export interface RoadPath {
 
 export interface WaterFeature {
   id: string;
-  type: 'river' | 'lake' | 'pond';
+  type: 'river' | 'lake' | 'pond' | 'coastline';
   points: number[];
   isClosed: boolean;
   zIndex: number;
+  beachPoints?: number[]; // Coastline-only points for beach strip rendering
 }
 
 export interface GreenArea {

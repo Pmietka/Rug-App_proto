@@ -9,12 +9,17 @@ export async function fetchOSMData(
   const { south, west, north, east } = bbox;
   const bboxStr = `${south},${west},${north},${east}`;
 
+  // Expand bbox slightly for coastline to ensure full coverage
+  const latPad = (north - south) * 0.15;
+  const lonPad = (east - west) * 0.15;
+  const expandedBbox = `${south - latPad},${west - lonPad},${north + latPad},${east + lonPad}`;
+
   onProgress?.('Building Overpass query...');
 
   const query = `
 [out:json][timeout:60];
 (
-  way["highway"~"^(primary|secondary|tertiary|residential|service|footway|pedestrian|path|cycleway|unclassified)$"](${bboxStr});
+  way["highway"~"^(primary|trunk|secondary|tertiary|residential|service|footway|pedestrian|path|cycleway|unclassified)$"](${bboxStr});
   way["building"](${bboxStr});
   way["amenity"](${bboxStr});
   way["leisure"~"^(park|garden|playground|pitch|recreation_ground)$"](${bboxStr});
@@ -26,6 +31,7 @@ export async function fetchOSMData(
   node["shop"](${bboxStr});
   node["tourism"](${bboxStr});
   node["leisure"="playground"](${bboxStr});
+  way["natural"="coastline"](${expandedBbox});
 );
 out body geom;
 >;
@@ -64,6 +70,9 @@ function categorizeFeatures(elements: OSMFeature[]): OSMData {
 
     if (tags.highway) {
       osmData.roads.push(el);
+    } else if (tags.natural === 'coastline') {
+      // Coastline goes into waterFeatures with its natural tag preserved
+      osmData.waterFeatures.push(el);
     } else if (tags.building || tags.amenity === 'school' || tags.amenity === 'hospital' ||
                tags.amenity === 'library' || tags.amenity === 'fire_station' ||
                tags.amenity === 'place_of_worship' || tags.shop) {

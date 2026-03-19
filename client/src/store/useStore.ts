@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import type {
   Project, CanvasAsset, RoadPath, WaterFeature, GreenArea,
-  BoundingBox, RugDimension, OSMData, CanvasState, Tool, HistoryEntry
+  BoundingBox, RugDimension, OSMData, CanvasState, Tool, HistoryEntry, RoadDetailLevel
 } from '../types';
 
 const RUG_DIMS: Record<RugDimension, { w: number; h: number }> = {
@@ -45,6 +45,9 @@ interface AppState {
   // Place tool
   placingAssetType: string | null;
 
+  // Map generation settings
+  roadDetailLevel: RoadDetailLevel;
+
   // Actions
   setProject: (project: Partial<Project>) => void;
   setProjects: (projects: Project[]) => void;
@@ -56,6 +59,7 @@ interface AppState {
   setLeftPanelTab: (tab: 'assets' | 'area' | 'project') => void;
   setRightPanelTab: (tab: 'properties' | 'layers') => void;
   setPlacingAssetType: (type: string | null) => void;
+  setRoadDetailLevel: (level: RoadDetailLevel) => void;
 
   // Asset actions
   addAsset: (asset: CanvasAsset) => void;
@@ -119,6 +123,7 @@ export const useStore = create<AppState>()(
     leftPanelTab: 'area',
     rightPanelTab: 'properties',
     placingAssetType: null,
+    roadDetailLevel: 'balanced',
 
     setProject: (updates) => set((state) => {
       Object.assign(state.project, updates, { updatedAt: new Date().toISOString() });
@@ -148,6 +153,7 @@ export const useStore = create<AppState>()(
     setLeftPanelTab: (tab) => set((state) => { state.leftPanelTab = tab; }),
     setRightPanelTab: (tab) => set((state) => { state.rightPanelTab = tab; }),
     setPlacingAssetType: (type) => set((state) => { state.placingAssetType = type; }),
+    setRoadDetailLevel: (level) => set((state) => { state.roadDetailLevel = level; }),
 
     addAsset: (asset) => {
       get().pushHistory();
