@@ -1,6 +1,6 @@
 import type { BoundingBox, OSMData, OSMFeature } from '../types';
 
-const OVERPASS_URL = 'https://overpass-api.de/api/interpreter';
+const OVERPASS_URL = 'https://overpass.kumi.systems/api/interpreter';
 
 export async function fetchOSMData(
   bbox: BoundingBox,
