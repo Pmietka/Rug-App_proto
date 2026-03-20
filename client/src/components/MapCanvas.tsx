@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import {
-  Stage, Layer, Line, Rect, Image as KonvaImage, Text, Group, Shape
+  Stage, Layer, Line, Rect, Image as KonvaImage, Text, Group, Shape as KonvaShape
 } from 'react-konva';
 import type Konva from 'konva';
 import { useStore } from '../store/useStore';
@@ -75,34 +75,75 @@ const GreenAreaShape: React.FC<{ area: GreenArea }> = ({ area }) => {
 
 // ─── Water shape ──────────────────────────────────────────────────────────────
 
-const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
+const WaterShape: React.FC<{
+  feature: WaterFeature;
+  canvasW: number;
+  canvasH: number;
+}> = ({ feature, canvasW, canvasH }) => {
   if (feature.type === 'coastline') {
+    const beach = feature.beachPoints ?? feature.points;
+    if (beach.length < 4) return null;
+
+    // Determine which side is water from the X values of the beach line.
+    // We use min/max X rather than avg to get the actual shore boundary.
+    const xVals = beach.filter((_, i) => i % 2 === 0);
+    const minX = Math.min(...xVals);
+    const maxX = Math.max(...xVals);
+    const midX = (minX + maxX) / 2;
+    const waterOnRight = midX > canvasW * 0.4;
+
+    // Rectangle that fills the water side of the canvas.
+    // Starts 15px inside the coast so the beach strip covers the seam.
+    const fillX      = waterOnRight ? Math.max(0, minX - 15) : 0;
+    const fillWidth  = waterOnRight ? canvasW - fillX        : maxX + 15;
+    const waveStartX = waterOnRight ? minX + 10              : 0;
+    const waveEndX   = waterOnRight ? canvasW - 5            : maxX - 10;
+
     return (
       <Group listening={false}>
-        {/* Water fill */}
-        <Line
-          points={feature.points}
-          closed
+        {/* Main water fill rectangle */}
+        <Rect
+          x={fillX}
+          y={0}
+          width={fillWidth}
+          height={canvasH}
           fill="#6aaede"
-          stroke="#4a8ec0"
-          strokeWidth={1}
           opacity={0.88}
+        />
+        {/* Subtle wave lines */}
+        <Group opacity={0.18}>
+          {[0.12, 0.27, 0.42, 0.58, 0.73, 0.88].map((t, i) => (
+            <Line
+              key={i}
+              points={[waveStartX, canvasH * t, waveEndX, canvasH * t]}
+              stroke="#ffffff"
+              strokeWidth={1.5}
+              dash={[14, 9]}
+              lineCap="round"
+              listening={false}
+            />
+          ))}
+        </Group>
+        {/* Beach / sand strip along the actual shoreline */}
+        <Line
+          points={beach}
+          stroke="#e0cfa0"
+          strokeWidth={14}
+          lineCap="round"
+          lineJoin="round"
+          opacity={0.95}
           listening={false}
         />
-        {/* Beach strip along the coastline edge */}
-        {feature.beachPoints && feature.beachPoints.length >= 4 && (
-          <Line
-            points={feature.beachPoints}
-            stroke="#e8d8a8"
-            strokeWidth={10}
-            lineCap="round"
-            lineJoin="round"
-            opacity={0.9}
-            listening={false}
-          />
-        )}
-        {/* Subtle wave lines inside water */}
-        {feature.beachPoints && <WaveLines coastPoints={feature.beachPoints} />}
+        {/* Thin water-edge line on top of sand */}
+        <Line
+          points={beach}
+          stroke="#5a9ed0"
+          strokeWidth={3}
+          lineCap="round"
+          lineJoin="round"
+          opacity={0.7}
+          listening={false}
+        />
       </Group>
     );
   }
@@ -121,7 +162,7 @@ const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
     );
   }
 
-  // Lake / pond
+  // Lake / pond — closed polygon
   return (
     <Group listening={false}>
       <Line
@@ -133,7 +174,6 @@ const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
         opacity={0.85}
         listening={false}
       />
-      {/* Small wave hint for lakes */}
       <Line
         points={feature.points}
         closed
@@ -144,40 +184,6 @@ const WaterShape: React.FC<{ feature: WaterFeature }> = ({ feature }) => {
         opacity={0.25}
         listening={false}
       />
-    </Group>
-  );
-};
-
-// Subtle wave decoration inside coastline water
-const WaveLines: React.FC<{ coastPoints: number[] }> = ({ coastPoints }) => {
-  if (coastPoints.length < 4) return null;
-
-  // Find bounding box of coastline points
-  const xs = coastPoints.filter((_, i) => i % 2 === 0);
-  const ys = coastPoints.filter((_, i) => i % 2 !== 0);
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs) + 200; // extend into water
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-  const height = maxY - minY;
-
-  // Draw 4 horizontal wavy lines inside the water body
-  return (
-    <Group listening={false} opacity={0.18}>
-      {[0.2, 0.38, 0.58, 0.76].map((t, i) => {
-        const y = minY + height * t;
-        // Small wave pattern using dash
-        return (
-          <Line
-            key={i}
-            points={[minX + 20, y, maxX, y]}
-            stroke="#ffffff"
-            strokeWidth={2}
-            dash={[14, 8]}
-            lineCap="round"
-          />
-        );
-      })}
     </Group>
   );
 };
@@ -479,7 +485,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
 
           {/* Ground texture overlay */}
           {groundTexture && (
-            <Shape
+            <KonvaShape
               sceneFunc={(ctx, shape) => {
                 const pattern = ctx._context.createPattern(groundTexture, 'repeat');
                 if (pattern) {
@@ -500,7 +506,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
 
           {/* Water features */}
           {project.waterFeatures.map((water) => (
-            <WaterShape key={water.id} feature={water} />
+            <WaterShape key={water.id} feature={water} canvasW={canvasW} canvasH={canvasH} />
           ))}
 
           {/* Roads — sorted by zIndex */}

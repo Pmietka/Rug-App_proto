@@ -281,52 +281,22 @@ function extractWaterFeatures(
   const coastlineFeatures = features.filter(f => f.tags?.natural === 'coastline');
   const waterFeatures = features.filter(f => f.tags?.natural !== 'coastline');
 
-  // Handle coastline: stitch ways and create fill polygon
+  // Handle coastline: stitch ways, smooth, store beach line points.
+  // Water fill is rendered as a rectangle in MapCanvas (avoids polygon winding issues).
   if (coastlineFeatures.length > 0) {
     const coastChain = chainCoastlineWays(coastlineFeatures);
     if (coastChain.length >= 2) {
-      const projected = coastChain.map(p => projectLatLon(p.lat, p.lon, bbox, cw, ch));
-      // Apply Douglas-Peucker to smooth the coastline
-      const simplifiedFlat = simplifyPoints(projected.flatMap(p => p), 2);
-      const simplifiedPts: [number, number][] = [];
-      for (let i = 0; i < simplifiedFlat.length; i += 2) {
-        simplifiedPts.push([simplifiedFlat[i], simplifiedFlat[i + 1]]);
-      }
-
-      // Sort by Y for consistent top-to-bottom ordering
-      const sortedPts = [...simplifiedPts].sort((a, b) => a[1] - b[1]);
-
-      const avgX = sortedPts.reduce((s, p) => s + p[0], 0) / sortedPts.length;
-      const waterOnRight = avgX > cw * 0.35; // coastline not far left → water is east
-
-      const topY = sortedPts[0][1];
-      const bottomY = sortedPts[sortedPts.length - 1][1];
-      const beachFlat = sortedPts.flatMap(p => p);
-
-      let polyPoints: number[];
-      if (waterOnRight) {
-        polyPoints = [
-          ...beachFlat,
-          cw, Math.min(bottomY + 50, ch),
-          cw, ch,
-          cw, 0,
-          cw, Math.max(topY - 50, 0),
-        ];
-      } else {
-        polyPoints = [
-          ...beachFlat,
-          0, Math.min(bottomY + 50, ch),
-          0, ch,
-          0, 0,
-          0, Math.max(topY - 50, 0),
-        ];
-      }
+      const rawFlat = coastChain.flatMap(p => {
+        const [x, y] = projectLatLon(p.lat, p.lon, bbox, cw, ch);
+        return [x, y];
+      });
+      const beachFlat = simplifyPoints(rawFlat, 2);
 
       result.push({
         id: 'coastline-fill',
         type: 'coastline',
-        points: polyPoints,
-        isClosed: true,
+        points: beachFlat,   // beach line — MapCanvas builds the water fill rect
+        isClosed: false,
         zIndex: 4,
         beachPoints: beachFlat,
       });
