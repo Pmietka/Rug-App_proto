@@ -76,11 +76,21 @@ export const AreaPanel: React.FC = () => {
       });
 
       setOSMData(osmData);
+
+      // Auto-apply smart crop for coastal areas so the lake is visible
+      const hasCoastline = osmData.waterFeatures.some(f => f.tags?.natural === 'coastline');
+      let renderBbox = bbox;
+      if (hasCoastline) {
+        useStore.getState().setLoading(true, 'Adjusting framing for coastal view...');
+        renderBbox = computeSmartCropBbox(osmData, bbox);
+        setBoundingBox(renderBbox);
+      }
+
       useStore.getState().setLoading(true, 'Rendering map...');
 
       const { width, height } = getCanvasDimensions(project.rugDimension);
       const { roads, waterFeatures, greenAreas, assets } = osmToCanvasElements(
-        osmData, bbox, width, height, roadDetailLevel
+        osmData, renderBbox, width, height, roadDetailLevel
       );
 
       setRoads(roads);

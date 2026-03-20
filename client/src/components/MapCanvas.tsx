@@ -92,12 +92,14 @@ const WaterShape: React.FC<{
     const midX = (minX + maxX) / 2;
     const waterOnRight = midX > canvasW * 0.4;
 
-    // Rectangle that fills the water side of the canvas.
-    // Starts 15px inside the coast so the beach strip covers the seam.
-    const fillX      = waterOnRight ? Math.max(0, minX - 15) : 0;
-    const fillWidth  = waterOnRight ? canvasW - fillX        : maxX + 15;
-    const waveStartX = waterOnRight ? minX + 10              : 0;
-    const waveEndX   = waterOnRight ? canvasW - 5            : maxX - 10;
+    // Fill rectangle extends 40% of canvas width past the beach line so the
+    // lake is always prominent. Land features (green areas, roads) render on
+    // top in the Layer below — they naturally cover any inland overshoot.
+    const extension  = canvasW * 0.4;
+    const fillX      = waterOnRight ? Math.max(0, minX - extension) : 0;
+    const fillWidth  = waterOnRight ? canvasW - fillX               : Math.min(canvasW, maxX + extension);
+    const waveStartX = waterOnRight ? Math.max(fillX + 5, minX - extension + 10) : fillX + 5;
+    const waveEndX   = waterOnRight ? canvasW - 5                   : Math.min(canvasW - 5, maxX + extension - 10);
 
     return (
       <Group listening={false}>
@@ -499,15 +501,24 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
             />
           )}
 
-          {/* Green areas */}
+          {/* Coastline water fill — rendered FIRST so land features paint over inland overshoot */}
+          {project.waterFeatures
+            .filter(w => w.type === 'coastline')
+            .map(water => (
+              <WaterShape key={water.id} feature={water} canvasW={canvasW} canvasH={canvasH} />
+            ))}
+
+          {/* Green areas (on top of coastline water) */}
           {project.greenAreas.map((area) => (
             <GreenAreaShape key={area.id} area={area} />
           ))}
 
-          {/* Water features */}
-          {project.waterFeatures.map((water) => (
-            <WaterShape key={water.id} feature={water} canvasW={canvasW} canvasH={canvasH} />
-          ))}
+          {/* Rivers, lakes, ponds (after green areas) */}
+          {project.waterFeatures
+            .filter(w => w.type !== 'coastline')
+            .map(water => (
+              <WaterShape key={water.id} feature={water} canvasW={canvasW} canvasH={canvasH} />
+            ))}
 
           {/* Roads — sorted by zIndex */}
           {[...project.roads]
