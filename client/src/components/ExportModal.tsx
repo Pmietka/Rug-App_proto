@@ -51,41 +51,41 @@ export const ExportModal: React.FC<ExportModalProps> = ({ stageRef, onClose }) =
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={onClose}>
       <div
-        className="bg-[#1e1e2e] border border-[#2e2e3e] rounded-xl w-96 shadow-2xl"
+        className="bg-[#1c1c2e] border border-white/[0.07] rounded-xl w-96 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#2e2e3e]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.07]">
           <h2 className="text-white font-semibold">Export Map</h2>
-          <button onClick={onClose} className="text-[#6a6a7a] hover:text-white transition-colors">
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
             <X size={18} />
           </button>
         </div>
 
         <div className="p-5 space-y-5">
           {/* Dimensions summary */}
-          <div className="bg-[#2a2a3a] rounded-lg p-4 space-y-2">
+          <div className="bg-[#21213a] rounded-lg p-4 space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-[#8a8a9a]">Rug Size</span>
+              <span className="text-slate-400">Rug Size</span>
               <span className="text-white font-medium">{project.rugDimension} feet</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-[#8a8a9a]">Resolution</span>
+              <span className="text-slate-400">Resolution</span>
               <span className="text-white font-medium">{w * DPI} × {h * DPI} px</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-[#8a8a9a]">Print DPI</span>
+              <span className="text-slate-400">Print DPI</span>
               <span className="text-white font-medium">300 DPI</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-[#8a8a9a]">Color Profile</span>
+              <span className="text-slate-400">Color Profile</span>
               <span className="text-white font-medium">sRGB</span>
             </div>
           </div>
 
           {/* Format selection */}
           <div>
-            <label className="text-[#8a8a9a] text-sm mb-2 block">Export Format</label>
+            <label className="text-slate-400 text-sm mb-2 block">Export Format</label>
             <div className="grid grid-cols-3 gap-2">
               {(['png', 'tiff', 'pdf'] as ExportFormat[]).map((f) => (
                 <button
@@ -94,7 +94,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ stageRef, onClose }) =
                   className={`py-2.5 rounded-lg text-sm font-medium uppercase tracking-wide transition-colors ${
                     format === f
                       ? 'bg-purple-600 text-white'
-                      : 'bg-[#2a2a3a] text-[#8a8a9a] hover:bg-[#3a3a4a] hover:text-white'
+                      : 'bg-[#21213a] text-slate-400 hover:bg-[#2a2a42] hover:text-white'
                   }`}
                 >
                   {f}
@@ -116,7 +116,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ stageRef, onClose }) =
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:bg-[#3a3a4a] text-white font-medium py-3 rounded-lg transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 disabled:bg-[#21213a] text-white font-medium py-3 rounded-lg transition-colors"
           >
             {exporting ? (
               <>

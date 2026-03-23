@@ -38,7 +38,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
   const resetZoom = () => setCanvasState({ scale: 1, offsetX: 0, offsetY: 0 });
 
   return (
-    <div className="h-12 bg-[#1e1e2e] border-b border-[#2e2e3e] flex items-center px-3 gap-2 flex-shrink-0">
+    <div className="h-12 bg-[#1c1c2e] border-b border-white/[0.07] flex items-center px-3 gap-2 flex-shrink-0">
       {/* Logo */}
       <div className="flex items-center gap-2 mr-3">
         <div className="w-7 h-7 bg-gradient-to-br from-purple-500 to-blue-500 rounded-md flex items-center justify-center">
@@ -51,14 +51,14 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
       <input
         value={project.name}
         onChange={(e) => setProject({ name: e.target.value })}
-        className="bg-[#2e2e3e] text-white text-sm px-2 py-1 rounded border border-transparent hover:border-[#4e4e5e] focus:border-purple-500 focus:outline-none w-48"
+        className="bg-[#21213a] text-white text-sm px-2 py-1 rounded border border-transparent hover:border-white/[0.15] focus:border-purple-500 focus:outline-none w-48"
       />
-      {isDirty && <span className="text-[#6e6e7e] text-xs">●</span>}
+      {isDirty && <span className="text-slate-600 text-xs">●</span>}
 
       <div className="flex-1" />
 
       {/* Tools */}
-      <div className="flex items-center bg-[#2e2e3e] rounded-md p-0.5 gap-0.5">
+      <div className="flex items-center bg-[#21213a] rounded-md p-0.5 gap-0.5">
         <ToolBtn
           icon={<MousePointer2 size={15} />}
           active={activeTool === 'select'}
@@ -73,7 +73,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
         />
       </div>
 
-      <div className="w-px h-6 bg-[#2e2e3e]" />
+      <div className="w-px h-6 bg-white/[0.08]" />
 
       {/* Undo/Redo */}
       <ToolBtn
@@ -89,7 +89,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
         title="Redo (Ctrl+Y)"
       />
 
-      <div className="w-px h-6 bg-[#2e2e3e]" />
+      <div className="w-px h-6 bg-white/[0.08]" />
 
       {/* Labels toggle */}
       <ToolBtn
@@ -105,14 +105,14 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
         title="Layers"
       />
 
-      <div className="w-px h-6 bg-[#2e2e3e]" />
+      <div className="w-px h-6 bg-white/[0.08]" />
 
       {/* Zoom */}
       <div className="flex items-center gap-1">
         <ToolBtn icon={<ZoomOut size={15} />} onClick={zoomOut} title="Zoom Out" />
         <button
           onClick={resetZoom}
-          className="text-[#a0a0b0] text-xs hover:text-white px-1 w-12 text-center"
+          className="text-slate-400 text-xs hover:text-white px-1 w-12 text-center"
           title="Reset zoom"
         >
           {Math.round(canvasState.scale * 100)}%
@@ -120,13 +120,13 @@ export const TopBar: React.FC<TopBarProps> = ({ onExport }) => {
         <ToolBtn icon={<ZoomIn size={15} />} onClick={zoomIn} title="Zoom In" />
       </div>
 
-      <div className="w-px h-6 bg-[#2e2e3e]" />
+      <div className="w-px h-6 bg-white/[0.08]" />
 
       {/* Save */}
       <button
         onClick={handleSave}
         disabled={saving}
-        className="flex items-center gap-1.5 bg-[#2e2e3e] hover:bg-[#3e3e4e] text-[#a0a0b0] hover:text-white text-sm px-3 py-1.5 rounded transition-colors"
+        className="flex items-center gap-1.5 bg-[#21213a] hover:bg-[#2a2a42] text-slate-400 hover:text-white text-sm px-3 py-1.5 rounded transition-colors"
       >
         <Save size={14} />
         <span>{saving ? 'Saving...' : 'Save'}</span>
@@ -160,8 +160,8 @@ const ToolBtn: React.FC<{
       active
         ? 'bg-purple-600 text-white'
         : disabled
-        ? 'text-[#4e4e5e] cursor-not-allowed'
-        : 'text-[#a0a0b0] hover:text-white hover:bg-[#3e3e4e]'
+        ? 'text-slate-600 cursor-not-allowed'
+        : 'text-slate-400 hover:text-white hover:bg-[#2a2a42]'
     }`}
   >
     {icon}

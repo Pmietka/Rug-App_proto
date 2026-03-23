@@ -308,8 +308,8 @@ const AssetItem: React.FC<{
           <Text
             text={asset.label}
             fontSize={isLandmark ? 11 : 9}
-            fill="#2a2a3a"
-            fontFamily="'Segoe UI', Arial, sans-serif"
+            fill="#21213a"
+            fontFamily="Inter, 'Segoe UI', Arial, sans-serif"
             fontStyle="bold"
             align="center"
             width={Math.max(asset.width * asset.scaleX + 20, 90)}
@@ -584,7 +584,7 @@ export const MapCanvas: React.FC<MapCanvasProps> = ({ stageRef, containerRef }) 
       </Stage>
 
       {/* Canvas info overlay */}
-      <div className="absolute bottom-2 left-2 bg-[#1e1e2e]/80 text-[#6a6a7a] text-xs px-2 py-1 rounded flex items-center gap-3">
+      <div className="absolute bottom-2 left-2 bg-[#1c1c2e]/80 text-slate-500 text-xs px-2 py-1 rounded flex items-center gap-3">
         <span>{canvasW} × {canvasH}px</span>
         <span>{project.rugDimension} ft</span>
         <span>{project.roads.length} roads</span>

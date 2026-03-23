@@ -16,8 +16,8 @@ export const PropertiesPanel: React.FC = () => {
 
   if (!asset) {
     return (
-      <div className="p-4 text-center text-[#5a5a6a] text-sm">
-        <div className="mt-8 space-y-2">
+      <div className="p-4 text-center text-slate-600 text-sm">
+        <div className="mt-8 space-y-2 text-slate-600">
           <div className="text-3xl">↖</div>
           <div>Select an asset on the canvas to edit its properties</div>
         </div>
@@ -33,7 +33,7 @@ export const PropertiesPanel: React.FC = () => {
           <div className="text-white font-medium capitalize">
             {asset.type.replace(/-/g, ' ')}
           </div>
-          <div className="text-[#6a6a7a] text-xs capitalize">{asset.category}</div>
+          <div className="text-slate-500 text-xs capitalize">{asset.category}</div>
         </div>
         <div className="flex items-center gap-1">
           <ActionBtn icon={<Copy size={13} />} onClick={() => duplicateAsset(asset.id)} title="Duplicate" />
@@ -62,7 +62,7 @@ export const PropertiesPanel: React.FC = () => {
               className={`p-1 rounded aspect-square flex items-center justify-center transition-colors ${
                 asset.type === a.type
                   ? 'bg-purple-600 ring-1 ring-purple-400'
-                  : 'bg-[#2a2a3a] hover:bg-[#3a3a4a]'
+                  : 'bg-[#21213a] hover:bg-[#2a2a42]'
               }`}
             >
               <img src={a.icon} alt={a.label} className="w-7 h-7 object-contain" />
@@ -121,13 +121,13 @@ export const PropertiesPanel: React.FC = () => {
               type="number"
               value={asset.rotation}
               onChange={(e) => updateAsset(asset.id, { rotation: Number(e.target.value) })}
-              className="w-14 bg-[#2a2a3a] text-white text-xs px-1.5 py-1 rounded border border-[#3a3a4a] focus:outline-none focus:border-purple-500 text-right"
+              className="w-14 bg-[#21213a] text-white text-xs px-1.5 py-1 rounded border border-white/[0.07] focus:outline-none focus:border-purple-500 text-right"
             />
-            <span className="text-[#6a6a7a] text-xs">°</span>
+            <span className="text-slate-500 text-xs">°</span>
           </div>
           <button
             onClick={() => updateAsset(asset.id, { rotation: 0 })}
-            className="text-[#6a6a7a] hover:text-white transition-colors"
+            className="text-slate-500 hover:text-white transition-colors"
             title="Reset rotation"
           >
             <RotateCcw size={13} />
@@ -143,20 +143,20 @@ export const PropertiesPanel: React.FC = () => {
             value={asset.label || ''}
             onChange={(e) => updateAsset(asset.id, { label: e.target.value })}
             placeholder="Enter label..."
-            className="w-full bg-[#2a2a3a] text-white text-xs px-2 py-1.5 rounded border border-[#3a3a4a] focus:outline-none focus:border-purple-500 placeholder-[#5a5a6a]"
+            className="w-full bg-[#21213a] text-white text-xs px-2 py-1.5 rounded border border-white/[0.07] focus:outline-none focus:border-purple-500 placeholder-slate-600"
           />
           <label className="flex items-center gap-2 cursor-pointer">
             <div
               onClick={() => updateAsset(asset.id, { labelVisible: !asset.labelVisible })}
               className={`w-8 h-4 rounded-full transition-colors flex items-center px-0.5 ${
-                asset.labelVisible ? 'bg-purple-600' : 'bg-[#3a3a4a]'
+                asset.labelVisible ? 'bg-purple-600' : 'bg-[#2a2a42]'
               }`}
             >
               <div className={`w-3 h-3 bg-white rounded-full transition-transform ${
                 asset.labelVisible ? 'translate-x-4' : 'translate-x-0'
               }`} />
             </div>
-            <span className="text-[#8a8a9a] text-xs">Show label</span>
+            <span className="text-slate-400 text-xs">Show label</span>
           </label>
         </div>
       </Section>
@@ -166,18 +166,18 @@ export const PropertiesPanel: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => sendBackward(asset.id)}
-            className="flex items-center gap-1 bg-[#2a2a3a] hover:bg-[#3a3a4a] text-[#a0a0b0] text-xs px-2 py-1.5 rounded transition-colors flex-1 justify-center"
+            className="flex items-center gap-1 bg-[#21213a] hover:bg-[#2a2a42] text-slate-400 text-xs px-2 py-1.5 rounded transition-colors flex-1 justify-center"
           >
             <ArrowDown size={12} /> Send Back
           </button>
           <button
             onClick={() => bringForward(asset.id)}
-            className="flex items-center gap-1 bg-[#2a2a3a] hover:bg-[#3a3a4a] text-[#a0a0b0] text-xs px-2 py-1.5 rounded transition-colors flex-1 justify-center"
+            className="flex items-center gap-1 bg-[#21213a] hover:bg-[#2a2a42] text-slate-400 text-xs px-2 py-1.5 rounded transition-colors flex-1 justify-center"
           >
             <ArrowUp size={12} /> Bring Fwd
           </button>
         </div>
-        <div className="text-[#5a5a6a] text-xs text-center">Z-index: {asset.zIndex}</div>
+        <div className="text-slate-600 text-xs text-center">Z-index: {asset.zIndex}</div>
       </Section>
     </div>
   );
@@ -185,7 +185,7 @@ export const PropertiesPanel: React.FC = () => {
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <div>
-    <div className="text-[#7a7a8a] text-xs font-semibold uppercase tracking-wider mb-2">{title}</div>
+    <div className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">{title}</div>
     {children}
   </div>
 );
@@ -196,8 +196,8 @@ const NumInput: React.FC<{
   onChange: (v: number) => void;
   min?: number;
 }> = ({ label, value, onChange, min }) => (
-  <div className="flex items-center gap-1.5 bg-[#2a2a3a] rounded px-2 py-1 border border-[#3a3a4a] focus-within:border-purple-500">
-    <span className="text-[#6a6a7a] text-xs w-3">{label}</span>
+  <div className="flex items-center gap-1.5 bg-[#21213a] rounded px-2 py-1 border border-white/[0.07] focus-within:border-purple-500">
+    <span className="text-slate-500 text-xs w-3">{label}</span>
     <input
       type="number"
       value={value}
@@ -219,8 +219,8 @@ const ActionBtn: React.FC<{
     title={title}
     className={`p-1.5 rounded transition-colors ${
       danger
-        ? 'text-[#6a6a7a] hover:text-red-400 hover:bg-red-400/10'
-        : 'text-[#6a6a7a] hover:text-white hover:bg-[#3a3a4a]'
+        ? 'text-slate-500 hover:text-red-400 hover:bg-red-400/10'
+        : 'text-slate-500 hover:text-white hover:bg-[#2a2a42]'
     }`}
   >
     {icon}

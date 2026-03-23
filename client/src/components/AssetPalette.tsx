@@ -119,15 +119,15 @@ export const AssetPalette: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Category tabs */}
-      <div className="flex overflow-x-auto border-b border-[#2e2e3e] flex-shrink-0">
+      <div className="flex overflow-x-auto border-b border-white/[0.07] flex-shrink-0">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
             className={`px-3 py-2 text-xs whitespace-nowrap transition-colors flex-shrink-0 ${
               activeCategory === cat
-                ? 'text-white border-b-2 border-purple-500 bg-[#2a2a3a]'
-                : 'text-[#6a6a7a] hover:text-[#a0a0b0]'
+                ? 'text-white border-b-2 border-purple-500 bg-[#21213a]'
+                : 'text-slate-500 hover:text-slate-300'
             }`}
           >
             {CATEGORY_LABELS[cat]}
@@ -143,7 +143,7 @@ export const AssetPalette: React.FC = () => {
               key={asset.type}
               onClick={() => handleAssetClick(asset)}
               title={`Add ${asset.label}`}
-              className="asset-palette-item bg-[#2a2a3a] hover:bg-[#3a3a4a] rounded-md p-1.5 flex flex-col items-center gap-1 transition-colors group"
+              className="asset-palette-item bg-[#21213a] hover:bg-[#2a2a42] rounded-md p-1.5 flex flex-col items-center gap-1 transition-colors group"
             >
               <div className="w-12 h-12 flex items-center justify-center">
                 <img
@@ -153,7 +153,7 @@ export const AssetPalette: React.FC = () => {
                   draggable={false}
                 />
               </div>
-              <span className="text-[#8a8a9a] group-hover:text-[#c0c0d0] text-[10px] text-center leading-tight">
+              <span className="text-slate-500 group-hover:text-slate-300 text-[10px] text-center leading-tight">
                 {asset.label}
               </span>
             </button>
@@ -161,7 +161,7 @@ export const AssetPalette: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-2 border-t border-[#2e2e3e] text-[#5a5a6a] text-xs text-center">
+      <div className="p-2 border-t border-white/[0.07] text-slate-600 text-xs text-center">
         Click to place in center · Drag on canvas to reposition
       </div>
     </div>

@@ -129,20 +129,20 @@ export const AreaPanel: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-3 p-3 text-sm">
-      <div className="text-[#a0a0b0] text-xs font-semibold uppercase tracking-wider mb-1">
+      <div className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">
         Area Selection
       </div>
 
       {/* Search */}
       <div className="relative">
-        <div className="flex items-center gap-2 bg-[#2a2a3a] rounded-md px-2 py-1.5 border border-[#3a3a4a] focus-within:border-purple-500">
-          <Search size={14} className="text-[#6a6a7a] flex-shrink-0" />
+        <div className="flex items-center gap-2 bg-[#21213a] rounded-md px-2 py-1.5 border border-white/[0.07] focus-within:border-purple-500">
+          <Search size={14} className="text-slate-500 flex-shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search neighborhood, town..."
-            className="bg-transparent text-white text-sm flex-1 outline-none placeholder-[#5a5a6a]"
+            className="bg-transparent text-white text-sm flex-1 outline-none placeholder-slate-600"
           />
           {searching && (
             <div className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
@@ -150,12 +150,12 @@ export const AreaPanel: React.FC = () => {
         </div>
 
         {showResults && results.length > 0 && (
-          <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-[#2a2a3a] border border-[#3a3a4a] rounded-md shadow-xl overflow-hidden">
+          <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-[#21213a] border border-white/[0.07] rounded-md shadow-xl overflow-hidden">
             {results.map((r, i) => (
               <button
                 key={i}
                 onClick={() => handleSelectLocation(r)}
-                className="w-full text-left px-3 py-2 hover:bg-[#3a3a4a] text-[#c0c0d0] text-xs flex items-start gap-2 border-b border-[#3a3a4a] last:border-0"
+                className="w-full text-left px-3 py-2 hover:bg-[#2a2a42] text-slate-300 text-xs flex items-start gap-2 border-b border-white/[0.07] last:border-0"
               >
                 <MapPin size={12} className="mt-0.5 flex-shrink-0 text-purple-400" />
                 <span className="line-clamp-2">{r.display_name}</span>
@@ -167,12 +167,12 @@ export const AreaPanel: React.FC = () => {
 
       {/* Selected location info */}
       {hasBbox && (
-        <div className="bg-[#2a2a3a] rounded-md p-2 text-xs text-[#a0a0b0]">
+        <div className="bg-[#21213a] rounded-md p-2 text-xs text-slate-400">
           <div className="flex items-center gap-1.5 mb-1">
             <MapPin size={11} className="text-green-400" />
             <span className="text-green-400 font-medium">Area defined</span>
           </div>
-          <div className="space-y-0.5 text-[#7a7a8a]">
+          <div className="space-y-0.5 text-slate-500">
             <div>N: {project.boundingBox.north.toFixed(4)} S: {project.boundingBox.south.toFixed(4)}</div>
             <div>E: {project.boundingBox.east.toFixed(4)} W: {project.boundingBox.west.toFixed(4)}</div>
           </div>
@@ -181,17 +181,17 @@ export const AreaPanel: React.FC = () => {
 
       {/* Manual bbox inputs */}
       <div>
-        <div className="text-[#7a7a8a] text-xs mb-1.5">Or enter coordinates manually:</div>
+        <div className="text-slate-500 text-xs mb-1.5">Or enter coordinates manually:</div>
         <div className="grid grid-cols-2 gap-1.5">
           {(['north', 'south', 'east', 'west'] as const).map((dir) => (
             <div key={dir}>
-              <label className="text-[#6a6a7a] text-xs capitalize">{dir}</label>
+              <label className="text-slate-500 text-xs capitalize">{dir}</label>
               <input
                 type="number"
                 step="0.0001"
                 value={project.boundingBox[dir] || ''}
                 onChange={(e) => setBoundingBox({ ...project.boundingBox, [dir]: parseFloat(e.target.value) || 0 })}
-                className="w-full bg-[#2a2a3a] text-white text-xs px-2 py-1 rounded border border-[#3a3a4a] focus:border-purple-500 focus:outline-none mt-0.5"
+                className="w-full bg-[#21213a] text-white text-xs px-2 py-1 rounded border border-white/[0.07] focus:border-purple-500 focus:outline-none mt-0.5"
               />
             </div>
           ))}
@@ -200,7 +200,7 @@ export const AreaPanel: React.FC = () => {
 
       {/* Rug dimensions */}
       <div>
-        <label className="text-[#7a7a8a] text-xs block mb-1.5">Rug Dimensions</label>
+        <label className="text-slate-500 text-xs block mb-1.5">Rug Dimensions</label>
         <div className="grid grid-cols-2 gap-1.5">
           {RUG_DIMENSIONS.map((dim) => (
             <button
@@ -209,7 +209,7 @@ export const AreaPanel: React.FC = () => {
               className={`py-1.5 rounded text-xs font-medium transition-colors ${
                 project.rugDimension === dim
                   ? 'bg-purple-600 text-white'
-                  : 'bg-[#2a2a3a] text-[#a0a0b0] hover:bg-[#3a3a4a] hover:text-white'
+                  : 'bg-[#21213a] text-slate-400 hover:bg-[#2a2a42] hover:text-white'
               }`}
             >
               {dim} ft
@@ -220,7 +220,7 @@ export const AreaPanel: React.FC = () => {
 
       {/* Road Detail Level */}
       <div>
-        <label className="text-[#7a7a8a] text-xs block mb-1.5">Road Detail Level</label>
+        <label className="text-slate-500 text-xs block mb-1.5">Road Detail Level</label>
         <div className="flex flex-col gap-1">
           {ROAD_DETAIL_OPTIONS.map(({ level, label, desc }) => (
             <button
@@ -229,15 +229,15 @@ export const AreaPanel: React.FC = () => {
               className={`flex items-start gap-2 px-2.5 py-2 rounded text-xs text-left transition-colors border ${
                 roadDetailLevel === level
                   ? 'bg-blue-600/30 border-blue-500 text-white'
-                  : 'bg-[#2a2a3a] border-[#3a3a4a] text-[#a0a0b0] hover:bg-[#3a3a4a] hover:text-white'
+                  : 'bg-[#21213a] border-white/[0.07] text-slate-400 hover:bg-[#2a2a42] hover:text-white'
               }`}
             >
               <span className={`w-2 h-2 rounded-full mt-0.5 flex-shrink-0 ${
-                roadDetailLevel === level ? 'bg-blue-400' : 'bg-[#4a4a5a]'
+                roadDetailLevel === level ? 'bg-blue-400' : 'bg-slate-600'
               }`} />
               <span>
                 <span className="font-medium">{label}</span>
-                <span className="text-[#7a7a8a] block">{desc}</span>
+                <span className="text-slate-500 block">{desc}</span>
               </span>
             </button>
           ))}
@@ -248,7 +248,7 @@ export const AreaPanel: React.FC = () => {
       <button
         onClick={handleGenerate}
         disabled={!hasBbox}
-        className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-[#3a3a4a] disabled:to-[#3a3a4a] disabled:text-[#5a5a6a] text-white font-medium py-2.5 rounded-md transition-all text-sm"
+        className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-[#21213a] disabled:to-[#21213a] disabled:text-slate-600 text-white font-medium py-2.5 rounded-md transition-all text-sm"
       >
         <Play size={14} />
         Generate Map
@@ -266,8 +266,8 @@ export const AreaPanel: React.FC = () => {
       )}
 
       {/* Tips */}
-      <div className="text-[#5a5a6a] text-xs leading-relaxed">
-        <strong className="text-[#7a7a8a]">Tip:</strong> Use <strong className="text-[#8a8a9a]">Balanced</strong> for
+      <div className="text-slate-600 text-xs leading-relaxed">
+        <strong className="text-slate-500">Tip:</strong> Use <strong className="text-slate-400">Balanced</strong> for
         clean illustrated look. After generating, try <strong className="text-green-600/80">Smart Crop</strong> for
         coastal towns to remove lake dead space.
       </div>
